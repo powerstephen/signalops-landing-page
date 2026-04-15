@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>SignalOps — Revenue Intelligence Platform</title>
+  <meta name="description" content="Add one intelligence layer to your CRM, billing, and CS data. Beta launching June 2026."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background:#080E1A;color:#fff;font-family:'Inter',sans-serif;overflow-x:hidden}
+    a{text-decoration:none;color:inherit}
+    img{display:block}
+
+    /* NAV */
+    nav{position:sticky;top:0;z-index:100;background:rgba(11,17,32,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);padding:0 48px;height:60px;display:flex;align-items:center;justify-content:space-between}
+    .nav-logo{display:flex;align-items:center;gap:10px}
+    .nav-logo img{height:36px}
+    .nav-center{position:absolute;left:50%;transform:translateX(-50%);font-size:12px;font-weight:700;color:#475569;letter-spacing:0.14em;text-transform:uppercase;white-space:nowrap}
+    .nav-cta{background:#14b8a6;color:#fff;font-size:13px;font-weight:600;padding:10px 22px;border-radius:9px;transition:opacity 0.2s}
+    .nav-cta:hover{opacity:0.88}
+    .w{max-width:1200px;margin:0 auto;padding:0 48px}
+
+    /* HERO */
+    .hero-wrap{border-bottom:1px solid rgba(255,255,255,0.05)}
+    .hero{padding:80px 0 72px;text-align:center}
+    .hero h1{font-size:56px;font-weight:800;line-height:1.08;letter-spacing:-0.035em;margin-bottom:22px;color:#fff}
+    .hero h1 span{color:#14b8a6}
+    /* CHANGE 1: subheading smaller — fits in ~2 lines */
+    .hero p{font-size:15px;color:#94a3b8;line-height:1.75;margin-bottom:36px;max-width:540px;margin-left:auto;margin-right:auto}
+    .btn{display:inline-flex;align-items:center;gap:8px;background:#14b8a6;color:#fff;font-size:14px;font-weight:600;padding:15px 32px;border-radius:10px;transition:opacity 0.2s}
+    .btn:hover{opacity:0.88}
+    .hero-scarcity{margin-top:16px;font-size:13px;color:#475569}
+    .hero-scarcity span{color:#14b8a6;font-weight:600}
+
+    /* CAROUSEL */
+    .car-wrap-outer{border-bottom:1px solid rgba(255,255,255,0.05)}
+    .car-wrap{padding:36px 0}
+    .car-outer{display:flex;align-items:center;width:100%}
+    .car-btn{flex-shrink:0;width:32px;height:32px;border-radius:50%;background:rgba(20,184,166,0.1);border:1px solid rgba(20,184,166,0.3);color:#14b8a6;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s;user-select:none;line-height:1}
+    .car-btn:hover{background:rgba(20,184,166,0.2)}
+    .car-track-wrap{flex:1;overflow:hidden;margin:0 8px}
+    .car-track{display:flex;transition:transform 0.4s cubic-bezier(0.4,0,0.2,1)}
+    .car-card{min-width:100%;width:100%;background:#0f1829;border:1px solid rgba(255,255,255,0.07);border-radius:14px;overflow:hidden}
+    .car-top{display:flex;align-items:center;min-height:110px}
+    .car-logo-wrap{width:160px;flex-shrink:0;display:flex;align-items:center;justify-content:flex-start;padding:0 24px 0 32px;align-self:stretch}
+    .car-source{font-weight:800;letter-spacing:-0.02em;line-height:1.15;text-align:left}
+    .car-source.gartner{font-size:28px;color:#0b5ed7}
+    .car-source.bain{font-size:18px;color:#c41e3a}
+    .car-source.hbr{font-size:15px;color:#c8102e}
+    .car-source.mckinsey{font-size:15px;color:#c8c8c8}
+    .car-source.forrester{font-size:22px;color:#f36f21}
+    .car-source.mktg{font-size:15px;color:#a5b4fc}
+    .car-vdivider{width:1px;align-self:stretch;background:rgba(255,255,255,0.1);flex-shrink:0}
+    .car-quote{flex:1;font-size:18px;font-weight:700;color:#fff;line-height:1.45;letter-spacing:-0.02em;padding:0 40px}
+    .car-bottom{border-top:1px solid rgba(20,184,166,0.15);background:rgba(20,184,166,0.05);padding:13px 40px;display:flex;align-items:center;justify-content:center;gap:10px}
+    .car-signal-icon{width:18px;height:18px;border-radius:50%;background:rgba(20,184,166,0.15);border:1px solid rgba(20,184,166,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .car-signal-dot{width:5px;height:5px;border-radius:50%;background:#14b8a6}
+    .car-signal-txt{font-size:13px;color:#14b8a6;font-weight:600}
+    .car-dots{display:flex;justify-content:center;gap:8px;margin-top:16px}
+    .car-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.15);cursor:pointer;transition:background 0.2s,transform 0.2s}
+    .car-dot.active{background:#14b8a6;transform:scale(1.3)}
+
+    /* COMPARISON */
+    .cmp-wrap{border-bottom:1px solid rgba(255,255,255,0.05)}
+    .cmp{padding:72px 0}
+    .sec-lbl{font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#14b8a6;margin-bottom:10px;text-align:center}
+    .sec-ttl{font-size:28px;font-weight:700;letter-spacing:-0.02em;color:#fff;text-align:center;margin-bottom:40px}
+    .sec-ttl span{color:#14b8a6}
+    .cmp-table{width:100%;max-width:1060px;margin:0 auto;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.07)}
+    .cmp-head{display:grid;grid-template-columns:1fr 1fr}
+    .ch{padding:13px 28px;display:flex;align-items:center;gap:8px}
+    .ch-s{background:rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.07);border-right:1px solid rgba(255,255,255,0.07)}
+    .ch-t{background:rgba(20,184,166,0.07);border-bottom:1px solid rgba(20,184,166,0.15);position:relative}
+    .ch-t::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#14b8a6,transparent)}
+    .ch-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+    .ch-tag{font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase}
+    .cmp-row{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid rgba(255,255,255,0.04)}
+    .cmp-row:last-child{border-bottom:none}
+    .cc{padding:13px 28px;display:flex;align-items:center;gap:12px}
+    .cc-s{background:rgba(255,255,255,0.02);border-right:1px solid rgba(255,255,255,0.05)}
+    .cc-t{background:rgba(20,184,166,0.025)}
+    .ci{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .ci-s{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08)}
+    .ci-t{background:rgba(20,184,166,0.1);border:1px solid rgba(20,184,166,0.2)}
+    .ci svg{width:9px;height:9px}
+    .ct-ts{font-size:13px;font-weight:600;color:#94a3b8}
+    .ct-tt{font-size:13px;font-weight:600;color:#fff}
+    .ct-ss{font-size:11px;color:#334155}
+    .ct-st{font-size:11px;color:#64748b}
+    /* NEW: horizontal signal strip */
+    .sig-strip{width:100%;display:flex;gap:0;border:1px solid rgba(255,255,255,0.07);border-radius:12px;overflow:hidden}
+    .sig-item{flex:1;padding:22px 24px;background:rgba(20,184,166,0.03);border-right:1px solid rgba(255,255,255,0.06);display:flex;flex-direction:column;gap:8px}
+    .sig-item:last-child{border-right:none}
+    .sig-icon{width:28px;height:28px;border-radius:8px;background:rgba(20,184,166,0.1);border:1px solid rgba(20,184,166,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .sig-icon svg{width:13px;height:13px;stroke:#14b8a6;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+    .sig-title{font-size:13px;font-weight:700;color:#fff;line-height:1.3}
+    .sig-desc{font-size:11px;color:#64748b;line-height:1.5}
+
+    /* PLATFORM */
+    .plat-wrap{border-bottom:1px solid rgba(255,255,255,0.05)}
+    .plat{padding:72px 0}
+    .plat-heading{text-align:center;margin-bottom:52px}
+
+    /* Monitors — side screens same width/height as centre, just angled */
+    .monitors{display:flex;align-items:flex-end;justify-content:center;margin-bottom:64px;gap:0}
+    .mon-l{
+      width:32%;flex-shrink:0;position:relative;z-index:1;
+      transform:perspective(2000px) rotateY(15deg);
+      transform-origin:right bottom;
+      margin-right:-30px;
+      opacity:0.93;
+    }
+    .mon-c{width:32%;flex-shrink:0;position:relative;z-index:3}
+    .mon-r{
+      width:32%;flex-shrink:0;position:relative;z-index:1;
+      transform:perspective(2000px) rotateY(-15deg);
+      transform-origin:left bottom;
+      margin-left:-30px;
+      opacity:0.93;
+    }
+
+    .monitor{background:linear-gradient(160deg,#3a3f4a 0%,#23272f 40%,#1a1d24 100%);border-radius:10px;padding:8px 8px 0;border:1px solid rgba(255,255,255,0.18);box-shadow:0 8px 32px rgba(0,0,0,0.6),inset 0 1px 0 rgba(255,255,255,0.12),inset 0 -1px 0 rgba(0,0,0,0.3)}
+    .monitor-c{background:linear-gradient(160deg,#3a3f4a 0%,#23272f 40%,#1a1d24 100%);border-radius:12px;padding:10px 10px 0;border:1px solid rgba(255,255,255,0.2);box-shadow:0 20px 60px rgba(0,0,0,0.7),inset 0 1px 0 rgba(255,255,255,0.15),inset 0 -1px 0 rgba(0,0,0,0.4)}
+    .mon-screen{border-radius:4px;overflow:hidden;border:1px solid rgba(0,0,0,0.5)}
+    .mon-screen img{width:100%;display:block}
+    .mon-chin{height:22px;background:linear-gradient(to bottom,#23272f,#1a1d24);border-radius:0 0 8px 8px;margin:0 -8px;border-top:1px solid rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center}
+    .mon-chin-c{height:26px;background:linear-gradient(to bottom,#23272f,#1a1d24);border-radius:0 0 10px 10px;margin:0 -10px;border-top:1px solid rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center}
+    .mon-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.04)}
+    .mon-neck{width:14%;height:18px;background:linear-gradient(to bottom,#23272f,#1c2028);margin:0 auto;border-left:1px solid rgba(255,255,255,0.06);border-right:1px solid rgba(255,255,255,0.06)}
+    .mon-neck-c{width:10%;height:22px;background:linear-gradient(to bottom,#23272f,#1c2028);margin:0 auto;border-left:1px solid rgba(255,255,255,0.06);border-right:1px solid rgba(255,255,255,0.06)}
+    .mon-base{height:5px;border-radius:3px;margin:0 auto;background:linear-gradient(to bottom,#2a2f3a,#1a1d24);border:1px solid rgba(255,255,255,0.08)}
+
+    /* MODULES */
+    .mods-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:52px 44px}
+    .mod-hd{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+    .mod-ic svg{width:26px;height:26px;stroke:#14b8a6;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+    .mod-nm{font-size:18px;font-weight:700;color:#fff;letter-spacing:-0.01em}
+    .mod-dc{font-size:13px;color:#64748b;line-height:1.6;padding-left:38px}
+
+    /* BETA */
+    .beta-wrap{border-top:1px solid rgba(255,255,255,0.05)}
+    .beta{padding:80px 0;text-align:center}
+    .beta-lbl{font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#14b8a6;margin-bottom:10px}
+    .beta-ttl{font-size:32px;font-weight:700;letter-spacing:-0.02em;margin-bottom:12px}
+    .beta-ttl span{color:#14b8a6}
+    .beta-sub{font-size:16px;color:#94a3b8;line-height:1.7;margin-bottom:28px;max-width:560px;margin-left:auto;margin-right:auto}
+    .beta-scarce{display:inline-flex;align-items:center;gap:8px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.22);color:#fca5a5;font-size:13px;font-weight:500;padding:8px 18px;border-radius:100px;margin-bottom:36px}
+    .sdot{width:6px;height:6px;border-radius:50%;background:#f87171;flex-shrink:0}
+    .beta-form{max-width:540px;margin:0 auto 28px}
+    .beta-row{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px}
+    .ff{width:100%;border:none;border-bottom:1px solid rgba(255,255,255,0.1);background:transparent;color:#fff;font-size:13px;font-family:'Inter',sans-serif;padding:0 0 13px;outline:none;transition:border-color 0.2s}
+    .ff::placeholder{color:#334155}
+    .ff:focus{border-bottom-color:#14b8a6}
+    .fs{width:100%;background:#14b8a6;color:#fff;font-size:14px;font-weight:600;padding:15px;border-radius:10px;border:none;cursor:pointer;font-family:'Inter',sans-serif;transition:opacity 0.2s}
+    .fs:hover{opacity:0.88}
+    .fn{font-size:11px;color:#334155;margin-top:12px}
+    .beta-perks{display:flex;align-items:center;justify-content:center;gap:28px;flex-wrap:wrap;margin-top:28px}
+    .beta-perk{display:flex;align-items:center;gap:9px;font-size:13px;color:#94a3b8}
+    .pck{width:20px;height:20px;border-radius:50%;background:rgba(20,184,166,0.1);border:1px solid rgba(20,184,166,0.28);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:10px;color:#14b8a6;font-weight:700}
+    .fok{display:none;text-align:center;padding:32px 0}
+    .fok-i{font-size:28px;color:#14b8a6;margin-bottom:12px}
+    .fok-t{font-size:18px;font-weight:600;margin-bottom:6px}
+    .fok-s{font-size:14px;color:#94a3b8}
+
+    footer{border-top:1px solid rgba(255,255,255,0.05);padding:22px 48px;background:#0b1120;display:flex;align-items:center;justify-content:space-between}
+    .fl{display:flex;align-items:center;gap:10px}
+    .fl img{height:22px;opacity:0.5}
+
+    @media(max-width:900px){
+      nav,footer{padding:0 20px}
+      .w{padding:0 20px}
+      .nav-center{display:none}
+      .hero h1{font-size:36px}
+      .hero p{font-size:15px}
+      .monitors{flex-direction:column;align-items:center;gap:24px;perspective:none}
+      .mon-l,.mon-c,.mon-r{width:92%;transform:none;opacity:1;margin:0}
+      .mods-grid{grid-template-columns:1fr 1fr;gap:32px}
+      .beta-perks{gap:16px}
+      footer{padding:16px 20px;flex-direction:column;gap:8px;text-align:center}
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo"><img src="/logo.png" alt="SignalOps"/></div>
+  <div class="nav-center">Revenue Intelligence Platform</div>
+  <a href="#beta" class="nav-cta">Join beta</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero-wrap"><div class="w">
+  <div class="hero">
+    <h1>You're sitting on a gold mine.<br>You don't need 15 tools <span>to find it.</span></h1>
+    <p>Add one intelligence layer to your existing CRM, billing, and CS data — and see exactly which customers to protect, fix, and find more of. No new stack. No bloated toolset. Just the signals you have been missing.</p>
+    <a href="#beta" class="btn">Join the beta →</a>
+    <div class="hero-scarcity">Beta launching June 2026 &nbsp;·&nbsp; <span>50 spots only</span></div>
+  </div>
+</div></div>
+
+<!-- CAROUSEL -->
+<div class="car-wrap-outer"><div class="w">
+  <div class="car-wrap">
+    <div class="car-outer">
+      <button class="car-btn" id="car-prev">&#8249;</button>
+      <div class="car-track-wrap">
+        <div class="car-track" id="car-track">
+
+          <div class="car-card">
+            <div class="car-top">
+              <div class="car-logo-wrap"><div class="car-source gartner">Gartner</div></div>
+              <div class="car-vdivider"></div>
+              <div class="car-quote">"Sales teams frequently allocate resources to low-potential leads due to a lack of customer insight."</div>
+            </div>
+            <div class="car-bottom">
+              <div class="car-signal-icon"><div class="car-signal-dot"></div></div>
+              <div class="car-signal-txt">Use SignalOps live prioritisation engine for best-fit and in-market opportunities</div>
+            </div>
+          </div>
+
+          <div class="car-card">
+            <div class="car-top">
+              <div class="car-logo-wrap"><div class="car-source bain">Bain &amp;<br>Company</div></div>
+              <div class="car-vdivider"></div>
+              <div class="car-quote">"A 5% increase in customer retention can increase profits by 25% to 95%."</div>
+            </div>
+            <div class="car-bottom">
+              <div class="car-signal-icon"><div class="car-signal-dot"></div></div>
+              <div class="car-signal-txt">SignalOps surfaces churn risk before customers cancel — giving you time to intervene and protect your margin</div>
+            </div>
+          </div>
+
+          <div class="car-card">
+            <div class="car-top">
+              <div class="car-logo-wrap"><div class="car-source hbr">Harvard<br>Business<br>Review</div></div>
+              <div class="car-vdivider"></div>
+              <div class="car-quote">"Acquiring a new customer is 5 to 25 times more expensive than retaining an existing one."</div>
+            </div>
+            <div class="car-bottom">
+              <div class="car-signal-icon"><div class="car-signal-dot"></div></div>
+              <div class="car-signal-txt">SignalOps turns your existing customer base into your best pipeline — upsell, renewal, and re-engagement signals included</div>
+            </div>
+          </div>
+
+          <div class="car-card">
+            <div class="car-top">
+              <div class="car-logo-wrap"><div class="car-source mckinsey">McKinsey<br>&amp; Company</div></div>
+              <div class="car-vdivider"></div>
+              <div class="car-quote">"Companies using revenue intelligence see 15% higher sales efficiency and 20% shorter sales cycles."</div>
+            </div>
+            <div class="car-bottom">
+              <div class="car-signal-icon"><div class="car-signal-dot"></div></div>
+              <div class="car-signal-txt">One SignalOps intelligence layer across your CRM, billing, and CS data — less research, more closing</div>
+            </div>
+          </div>
+
+          <div class="car-card">
+            <div class="car-top">
+              <div class="car-logo-wrap"><div class="car-source gartner">Gartner</div></div>
+              <div class="car-vdivider"></div>
+              <div class="car-quote">"Only 45% of sales leaders are confident in the accuracy of their sales forecasts."</div>
+            </div>
+            <div class="car-bottom">
+              <div class="car-signal-icon"><div class="car-signal-dot"></div></div>
+              <div class="car-signal-txt">SignalOps replaces gut-feel with live deal scoring and next-best-action signals — your pipeline reflects reality, not optimism</div>
+            </div>
+          </div>
+
+          <div class="car-card">
+            <div class="car-top">
+              <div class="car-logo-wrap"><div class="car-source mktg">Marketing<br>Metrics</div></div>
+              <div class="car-vdivider"></div>
+              <div class="car-quote">"The probability of selling to an existing customer is 60–70%. To a new prospect, it's just 5–20%."</div>
+            </div>
+            <div class="car-bottom">
+              <div class="car-signal-icon"><div class="car-signal-dot"></div></div>
+              <div class="car-signal-txt">SignalOps identifies which existing accounts are ready to expand and triggers the right outreach at the right moment</div>
+            </div>
+          </div>
+
+          <div class="car-card">
+            <div class="car-top">
+              <div class="car-logo-wrap"><div class="car-source forrester">Forrester</div></div>
+              <div class="car-vdivider"></div>
+              <div class="car-quote">"Companies that use proactive customer care reduce churn by 10% to 15%."</div>
+            </div>
+            <div class="car-bottom">
+              <div class="car-signal-icon"><div class="car-signal-dot"></div></div>
+              <div class="car-signal-txt">SignalOps monitors health signals across your entire base — alerting you the moment an account starts to drift</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <button class="car-btn" id="car-next">&#8250;</button>
+    </div>
+    <div class="car-dots" id="car-dots"></div>
+  </div>
+</div></div>
+
+<!-- COMPARISON -->
+<div class="cmp-wrap"><div class="w">
+  <div class="cmp">
+    <div class="sec-lbl">Take it to the next level</div>
+    <div class="sec-ttl">Most teams track revenue. <span>SignalOps reads the signals behind it.</span></div>
+    <div class="cmp-table">
+      <div class="cmp-head">
+        <div class="ch ch-s"><div class="ch-dot" style="background:#334155"></div><span class="ch-tag" style="color:#475569">Standard intelligence</span></div>
+        <div class="ch ch-t"><div class="ch-dot" style="background:#14b8a6"></div><span class="ch-tag" style="color:#14b8a6">SignalOps intelligence</span></div>
+      </div>
+      <div class="cmp-row">
+        <div class="cc cc-s"><div class="ci ci-s"><svg viewBox="0 0 10 10" fill="none" stroke="#475569" stroke-width="1.5" stroke-linecap="round"><circle cx="5" cy="4" r="2"/><path d="M1 9c0-2 1.8-3.5 4-3.5S9 7 9 9"/></svg></div><div><div class="ct-ts">Generic buyer personas based on assumptions</div><div class="ct-ss">Not grounded in real customer data</div></div></div>
+        <div class="cc cc-t"><div class="ci ci-t"><svg viewBox="0 0 10 10" fill="none" stroke="#14b8a6" stroke-width="1.5" stroke-linecap="round"><circle cx="5" cy="5" r="4"/><circle cx="5" cy="5" r="2"/><circle cx="5" cy="5" r="0.5" fill="#14b8a6"/></svg></div><div><div class="ct-tt">Profit ICP targets based on profit and lifetime value (LTV)</div><div class="ct-st">Your best customers, not your average ones</div></div></div>
+      </div>
+      <div class="cmp-row">
+        <div class="cc cc-s"><div class="ci ci-s"><svg viewBox="0 0 10 10" fill="none" stroke="#475569" stroke-width="1.5" stroke-linecap="round"><path d="M5 1v4l2.5 1.5"/><circle cx="5" cy="5" r="4"/></svg></div><div><div class="ct-ts">Churn discovered after the customer cancels</div><div class="ct-ss">You find out when it's already too late</div></div></div>
+        <div class="cc cc-t"><div class="ci ci-t"><svg viewBox="0 0 10 10" fill="none" stroke="#14b8a6" stroke-width="1.5" stroke-linecap="round"><path d="M9 5A4 4 0 111 5"/><path d="M7 3l2 2-2 2"/></svg></div><div><div class="ct-tt">Mitigate churn risk with built-in early warning signals</div><div class="ct-st">Intervene before they cancel, not after</div></div></div>
+      </div>
+      <div class="cmp-row">
+        <div class="cc cc-s"><div class="ci ci-s"><svg viewBox="0 0 10 10" fill="none" stroke="#475569" stroke-width="1.5" stroke-linecap="round"><path d="M1 5h8M5 1l4 4-4 4"/></svg></div><div><div class="ct-ts">Average customer value that masks true margin</div><div class="ct-ss">Who drives profit is hidden in the average</div></div></div>
+        <div class="cc cc-t"><div class="ci ci-t"><svg viewBox="0 0 10 10" fill="none" stroke="#14b8a6" stroke-width="1.5" stroke-linecap="round"><ellipse cx="5" cy="3" rx="4" ry="1.5"/><path d="M1 3v4c0 .83 1.79 1.5 4 1.5S9 7.83 9 7V3"/><path d="M1 5c0 .83 1.79 1.5 4 1.5S9 5.83 9 5"/></svg></div><div><div class="ct-tt">Margin per customer — who's profitable, who's draining it</div><div class="ct-st">Revenue without margin context is just noise</div></div></div>
+      </div>
+      <div class="cmp-row">
+        <div class="cc cc-s"><div class="ci ci-s"><svg viewBox="0 0 10 10" fill="none" stroke="#475569" stroke-width="1.5" stroke-linecap="round"><rect x="1" y="2" width="8" height="6" rx="1"/><path d="M1 4h8"/></svg></div><div><div class="ct-ts">Pipeline stages that show where deals are, not why they stall</div><div class="ct-ss">No guidance on what to do next</div></div></div>
+        <div class="cc cc-t"><div class="ci ci-t"><svg viewBox="0 0 10 10" fill="none" stroke="#14b8a6" stroke-width="1.5" stroke-linecap="round"><polygon points="5,1 9,4 9,9 1,9 1,4"/><path d="M3.5 9V6h3v3"/></svg></div><div><div class="ct-tt">Deal intelligence with next steps that keeps deals closing</div><div class="ct-st">The decision engine behind every live opportunity</div></div></div>
+      </div>
+      <div class="cmp-row">
+        <div class="cc cc-s"><div class="ci ci-s"><svg viewBox="0 0 10 10" fill="none" stroke="#475569" stroke-width="1.5" stroke-linecap="round"><polyline points="1,7 3.5,4 5.5,5.5 9,2"/></svg></div><div><div class="ct-ts">Revenue and MRR with no buying signal context</div><div class="ct-ss">You know the number, not what's driving it</div></div></div>
+        <div class="cc cc-t"><div class="ci ci-t"><svg viewBox="0 0 10 10" fill="none" stroke="#14b8a6" stroke-width="1.5" stroke-linecap="round"><polyline points="1,7 3.5,4 5.5,5.5 9,2"/><polyline points="7,2 9,2 9,4"/></svg></div><div><div class="ct-tt">Live buying signals — funding, new hires, launches, expansions</div><div class="ct-st">Know who is in-market before your competitors do</div></div></div>
+      </div>
+      <div class="cmp-row">
+        <div class="cc cc-s"><div class="ci ci-s"><svg viewBox="0 0 10 10" fill="none" stroke="#475569" stroke-width="1.5" stroke-linecap="round"><path d="M1 7l3-3 2 2 3-3"/></svg></div><div><div class="ct-ts">Email open rates with no revenue context</div><div class="ct-ss">Engagement data that never connects to pipeline</div></div></div>
+        <div class="cc cc-t"><div class="ci ci-t"><svg viewBox="0 0 10 10" fill="none" stroke="#14b8a6" stroke-width="1.5" stroke-linecap="round"><path d="M5 1l1 3h3l-2.5 2 1 3L5 7.5 2.5 9l1-3L1 4h3z"/></svg></div><div><div class="ct-tt">Upsell, renewal and re-engagement — know who's ready and when</div><div class="ct-st">Your existing base is your best pipeline</div></div></div>
+      </div>
+    </div>
+  </div>
+</div></div>
+
+<!-- PLATFORM -->
+<div class="plat-wrap"><div class="w">
+  <div class="plat">
+    <div class="plat-heading">
+      <div class="sec-lbl">The platform</div>
+      <div class="sec-ttl">Six modules. <span>One intelligence layer.</span></div>
+    </div>
+
+    <div class="monitors">
+      <div class="mon-l">
+        <div class="monitor">
+          <div class="mon-screen"><img src="/icp-screenshot.png" alt="ICP Profile"/></div>
+          <div class="mon-chin"><div class="mon-dot"></div></div>
+        </div>
+        <div class="mon-neck"></div>
+        <div class="mon-base" style="width:56%"></div>
+      </div>
+      <div class="mon-c">
+        <div class="monitor-c">
+          <div class="mon-screen"><img src="/profit-matrix-screenshot.png" alt="Profit Matrix"/></div>
+          <div class="mon-chin-c"><div class="mon-dot"></div></div>
+        </div>
+        <div class="mon-neck-c"></div>
+        <div class="mon-base" style="width:40%"></div>
+      </div>
+      <div class="mon-r">
+        <div class="monitor">
+          <div class="mon-screen"><img src="/ignite-screenshot.png" alt="Ignite"/></div>
+          <div class="mon-chin"><div class="mon-dot"></div></div>
+        </div>
+        <div class="mon-neck"></div>
+        <div class="mon-base" style="width:56%"></div>
+      </div>
+    </div>
+
+    <div class="mods-grid">
+      <div><div class="mod-hd"><div class="mod-ic"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div><div class="mod-nm">Data Centre</div></div><div class="mod-dc">Connect CRM, billing, and CS data into one verified source of truth.</div></div>
+      <div><div class="mod-hd"><div class="mod-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><div class="mod-nm">ICP Profile</div></div><div class="mod-dc">Build your ideal customer profile from real data, not guesswork.</div></div>
+      <div><div class="mod-hd"><div class="mod-ic"><svg viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div><div class="mod-nm">Profit Matrix</div></div><div class="mod-dc">See which accounts are profitable and which are draining your margin.</div></div>
+      <div><div class="mod-hd"><div class="mod-ic"><svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-5"/></svg></div><div class="mod-nm">Recover</div></div><div class="mod-dc">Surface dormant accounts showing live buying signals right now.</div></div>
+      <div><div class="mod-hd"><div class="mod-ic"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><div class="mod-nm">Generate</div></div><div class="mod-dc">Find prospects that match your best customers, not your average ones.</div></div>
+      <div><div class="mod-hd"><div class="mod-ic"><svg viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></div><div class="mod-nm">Ignite</div></div><div class="mod-dc">Score every live deal and surface exactly what to do to close it.</div></div>
+    </div>
+  </div>
+</div></div>
+
+<!-- BETA -->
+<div class="beta-wrap" id="beta"><div class="w">
+  <div class="beta">
+    <div class="beta-lbl">Early access</div>
+    <div class="beta-ttl">Join the beta. <span>Find your gold mine.</span></div>
+    <div class="beta-sub">We're onboarding B2B SaaS companies with 20–200 customers who are ready to see what their data has been hiding.</div>
+    <div class="beta-scarce"><div class="sdot"></div>Limited to 50 companies · June 2026</div>
+    <div class="beta-form" id="fw">
+      <div class="beta-row">
+        <input class="ff" type="text" id="fn" placeholder="Full name"/>
+        <input class="ff" type="text" id="fc" placeholder="Company name"/>
+      </div>
+      <div class="beta-row">
+        <input class="ff" type="email" id="fe" placeholder="Work email"/>
+        <input class="ff" type="text" id="fcu" placeholder="No. of customers"/>
+      </div>
+      <button class="fs" onclick="go()">Request beta access →</button>
+      <div class="fn">50 spots only · We'll be in touch within 48 hours</div>
+    </div>
+    <div class="fok" id="fok">
+      <div class="fok-i">✓</div>
+      <div class="fok-t">You're on the list.</div>
+      <div class="fok-s">We'll be in touch within 48 hours.</div>
+    </div>
+    <div class="beta-perks">
+      <div class="beta-perk"><div class="pck">✓</div><span>Full platform free for 90 days</span></div>
+      <div class="beta-perk"><div class="pck">✓</div><span>Founding member pricing locked in forever</span></div>
+      <div class="beta-perk"><div class="pck">✓</div><span>Direct line to the product team</span></div>
+      <div class="beta-perk"><div class="pck">✓</div><span>Shape the roadmap from day one</span></div>
+    </div>
+  </div>
+</div></div>
+
+<footer>
+  <div class="fl"><img src="/logo.png" alt="SignalOps"/><span style="color:#1e293b">·</span><span style="font-size:12px;color:#1e293b">Revenue Intelligence Platform</span></div>
+  <div style="font-size:11px;color:#1e293b">© 2026 Koreva</div>
+</footer>
+
+<script>
+(function(){
+  var total=7,cur=0;
+  var track=document.getElementById('car-track');
+  var dotsEl=document.getElementById('car-dots');
+  for(var i=0;i<total;i++){
+    var d=document.createElement('div');
+    d.className='car-dot'+(i===0?' active':'');
+    d.setAttribute('data-i',i);
+    d.onclick=function(){carGo(parseInt(this.getAttribute('data-i')));};
+    dotsEl.appendChild(d);
+  }
+  function carGo(n){
+    cur=(n+total)%total;
+    track.style.transform='translateX(-'+(cur*100)+'%)';
+    dotsEl.querySelectorAll('.car-dot').forEach(function(d,i){d.className='car-dot'+(i===cur?' active':'');});
+  }
+  document.getElementById('car-prev').onclick=function(){carGo(cur-1);};
+  document.getElementById('car-next').onclick=function(){carGo(cur+1);};
+  carGo(0);
+  var ap=setInterval(function(){carGo(cur+1);},6000);
+  document.querySelector('.car-track-wrap').addEventListener('mouseenter',function(){clearInterval(ap);});
+})();
+
+function go(){
+  var n=document.getElementById('fn').value.trim();
+  var e=document.getElementById('fe').value.trim();
+  var c=document.getElementById('fc').value.trim();
+  var cu=document.getElementById('fcu').value.trim();
+  if(!n||!e){alert('Please enter your name and email.');return;}
+  var b=document.querySelector('.fs');
+  b.disabled=true;b.textContent='Submitting...';b.style.opacity='0.6';
+  fetch('https://api.resend.com/emails',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Authorization':'Bearer re_ULK93ABP_95YMv6i1RW8rNqie1bFEsnNH'},
+    body:JSON.stringify({from:'team@signal-ops.app',to:'power.stephen@gmail.com',subject:'New beta signup: '+n,html:'<h2>New SignalOps beta signup</h2><p><strong>Name:</strong> '+n+'</p><p><strong>Email:</strong> '+e+'</p><p><strong>Company:</strong> '+(c||'Not provided')+'</p><p><strong>Customers:</strong> '+(cu||'Not provided')+'</p>'})
+  }).then(function(){
+    document.getElementById('fw').style.display='none';
+    document.getElementById('fok').style.display='block';
+  }).catch(function(){
+    document.getElementById('fw').style.display='none';
+    document.getElementById('fok').style.display='block';
+  });
+}
+</script>
+</body>
+</html>
