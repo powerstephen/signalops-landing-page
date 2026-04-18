@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>SignalOps — Revenue Intelligence Platform</title>
+  <meta name="description" content="The intelligence layer your revenue team has been missing."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background:#080E1A;color:#fff;font-family:'Inter',sans-serif;overflow-x:hidden}
+    a{text-decoration:none;color:inherit}
+    img{display:block}
+    .w{max-width:1400px;margin:0 auto;padding:0 52px}
+
+    /* NAV */
+    nav{position:sticky;top:0;z-index:100;background:rgba(8,14,26,0.96);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.07);padding:0 52px;height:68px;display:flex;align-items:center;justify-content:space-between}
+    .nav-logo{height:44px}
+    .nav-center{position:absolute;left:50%;transform:translateX(-50%);font-size:15px;font-weight:700;color:#fff;letter-spacing:0.04em;text-transform:uppercase;white-space:nowrap}
+    .nav-cta{background:#14b8a6;color:#fff;font-size:13px;font-weight:600;padding:11px 24px;border-radius:9px;transition:opacity 0.2s}
+    .nav-cta:hover{opacity:0.88}
+
+    /* HERO — two column */
+    .hero-wrap{border-bottom:1px solid rgba(255,255,255,0.05)}
+    .hero-inner{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:center;padding:72px 0 64px}
+
+    /* Left text */
+    .hero-text{}
+    .hero-h1{font-size:52px;font-weight:800;line-height:1.08;letter-spacing:-0.035em;color:#fff;margin-bottom:28px}
+    .hero-h1 span{color:#14b8a6}
+    .hero-sub{font-size:19px;color:#64748b;line-height:1.7;margin-bottom:32px}
+    .hero-sub a{color:#14b8a6;font-weight:600;text-decoration:none}
+    .hero-sub a:hover{opacity:0.85}
+    .btn{display:inline-flex;align-items:center;gap:8px;background:#14b8a6;color:#fff;font-size:15px;font-weight:600;padding:16px 36px;border-radius:10px;transition:opacity 0.2s}
+    .btn:hover{opacity:0.88}
+    .hero-scarcity{margin-top:14px;font-size:13px;color:#475569}
+    .hero-scarcity span{color:#14b8a6;font-weight:600}
+
+    /* Right monitor */
+    .hero-monitor{}
+    .mon-outer{width:100%}
+    .webcam{display:flex;justify-content:center;position:relative;z-index:2}
+    .webcam-body{background:#2d2f38;border:1px solid #3a3d47;border-radius:10px;padding:5px 16px;display:flex;align-items:center;justify-content:center}
+    .webcam-signal{width:9px;height:9px;border-radius:50%;background:#00ef55;box-shadow:0 0 6px 2px rgba(0,240,85,0.4),0 0 14px 4px rgba(0,240,85,0.15)}
+    .monitor-frame{border-radius:12px;padding:9px;border:1px solid #606470;background:linear-gradient(to bottom,#b0b3ba,#5f626a)}
+    .monitor-screen{background:#080E1A;border-radius:6px;overflow:hidden;aspect-ratio:16/10;position:relative}
+    .mon-neck{width:24px;height:24px;background:linear-gradient(to bottom,#606470,#404348);margin:0 auto}
+    .mon-base-bar{height:8px;width:160px;background:linear-gradient(to bottom,#505358,#383b40);border-radius:0 0 6px 6px;margin:0 auto;border:1px solid #404348;border-top:none}
+
+    /* Monitor nav */
+    .nav-mock{position:absolute;top:0;left:0;right:0;background:#0d1422;border-bottom:1px solid rgba(255,255,255,0.07);padding:9px 14px;display:flex;align-items:center;gap:8px;z-index:2}
+    .nav-logo-mon{height:20px;object-fit:contain}
+    .nav-sep-mon{width:1px;height:14px;background:rgba(255,255,255,0.12);flex-shrink:0}
+    .nav-mock-tabs{display:flex;gap:2px;margin-left:auto}
+    .nav-tab-mon{font-size:8px;font-weight:600;color:rgba(255,255,255,0.3);padding:3px 8px;border-radius:4px;white-space:nowrap;transition:all 0.3s}
+    .nav-tab-mon.on{color:#14b8a6;background:rgba(20,184,166,0.12);border-bottom:1px solid #14b8a6}
+
+    /* Agent slides */
+    .agent-slides{position:absolute;inset:0;top:42px}
+    .agent-slide{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 36px;opacity:0;transition:opacity 0.6s ease;text-align:center}
+    .agent-slide.active{opacity:1}
+    .slide-header{display:flex;align-items:center;gap:12px;margin-bottom:12px;justify-content:center}
+    .slide-icon svg{width:26px;height:26px;stroke:#14b8a6;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+    .slide-name{font-size:20px;font-weight:700;color:#14b8a6;letter-spacing:-0.01em}
+    .slide-hook{font-size:14px;font-weight:600;color:#fff;line-height:1.4;margin-bottom:8px}
+    .slide-desc{font-size:11px;color:#64748b;line-height:1.6;max-width:320px}
+    .slide-dots{position:absolute;bottom:10px;left:0;right:0;display:flex;justify-content:center;gap:5px}
+    .slide-dot{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,0.15);transition:background 0.3s}
+    .slide-dot.on{background:#14b8a6}
+    .slide-progress{position:absolute;bottom:0;left:0;height:2px;background:#14b8a6}
+
+    /* FLIP GRID */
+    .grid-wrap{border-bottom:1px solid rgba(255,255,255,0.05)}
+    .grid-section{padding:80px 0}
+    .sec-lbl{font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#14b8a6;margin-bottom:12px;text-align:center}
+    .sec-ttl{font-size:32px;font-weight:800;letter-spacing:-0.025em;color:#fff;text-align:center;margin-bottom:8px}
+    .sec-ttl span{color:#14b8a6}
+    .sec-sub{font-size:14px;color:#475569;text-align:center;margin-bottom:48px}
+    .flip-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+
+    .flip-card{height:280px;perspective:1000px;cursor:pointer}
+    .flip-card-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform 0.55s cubic-bezier(0.4,0,0.2,1)}
+    .flip-card:hover .flip-card-inner{transform:rotateY(180deg)}
+    .flip-front,.flip-back{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;padding:24px;display:flex;flex-direction:column;justify-content:space-between}
+    .flip-front{background:#0f1829;border:1px solid rgba(255,255,255,0.07)}
+    .flip-back{background:#0f1829;border:1px solid rgba(20,184,166,0.2);transform:rotateY(180deg)}
+
+    .source-block{min-height:70px;display:flex;align-items:center;justify-content:flex-start}
+    .source-logo{max-width:160px;max-height:56px;width:auto;height:auto;object-fit:contain}
+    .source-name{font-weight:800;letter-spacing:-0.02em;line-height:1.2}
+    .src-bain{font-size:20px;color:#c41e3a}
+    .src-mckinsey{font-size:16px;color:#cccccc}
+    .src-hbr{font-size:16px;color:#c8102e}
+    .src-gartner{font-size:24px;color:#0b5ed7}
+    .src-forrester{font-size:22px;color:#f36f21}
+    .front-stat{font-size:14px;font-weight:600;color:#94a3b8;line-height:1.6}
+    .front-hint{font-size:12px;color:#334155;display:flex;align-items:center;gap:5px}
+    .hint-dot{width:4px;height:4px;border-radius:50%;background:#14b8a6;flex-shrink:0}
+
+    .back-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+    .back-header svg{width:26px;height:26px;stroke:#14b8a6;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+    .back-name{font-size:22px;font-weight:700;color:#14b8a6;letter-spacing:-0.01em}
+    .back-use{font-size:14px;font-weight:500;color:#94a3b8;line-height:1.6;flex:1}
+    .back-tag{font-size:12px;color:rgba(20,184,166,0.6);font-weight:500}
+
+    /* BETA */
+    .beta-wrap{}
+    .beta{padding:80px 0;text-align:center}
+    .beta-ttl{font-size:32px;font-weight:800;letter-spacing:-0.025em;margin-bottom:10px}
+    .beta-ttl span{color:#14b8a6}
+    .beta-sub{font-size:16px;color:#94a3b8;line-height:1.7;margin-bottom:24px;max-width:520px;margin-left:auto;margin-right:auto}
+    .beta-scarce{display:inline-flex;align-items:center;gap:8px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.22);color:#fca5a5;font-size:13px;font-weight:500;padding:8px 18px;border-radius:100px;margin-bottom:36px}
+    .sdot{width:6px;height:6px;border-radius:50%;background:#f87171;flex-shrink:0}
+    .beta-form{max-width:520px;margin:0 auto 24px}
+    .beta-row{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px}
+    .ff{width:100%;border:none;border-bottom:1px solid rgba(255,255,255,0.1);background:transparent;color:#fff;font-size:13px;font-family:'Inter',sans-serif;padding:0 0 13px;outline:none;transition:border-color 0.2s}
+    .ff::placeholder{color:#334155}
+    .ff:focus{border-bottom-color:#14b8a6}
+    .fs{width:100%;background:#14b8a6;color:#fff;font-size:14px;font-weight:600;padding:15px;border-radius:10px;border:none;cursor:pointer;font-family:'Inter',sans-serif;transition:opacity 0.2s}
+    .fs:hover{opacity:0.88}
+    .fn{font-size:11px;color:#334155;margin-top:12px}
+    .fok{display:none;text-align:center;padding:32px 0}
+    .fok-i{font-size:28px;color:#14b8a6;margin-bottom:12px}
+    .fok-t{font-size:18px;font-weight:600;margin-bottom:6px}
+    .fok-s{font-size:14px;color:#94a3b8}
+    .beta-perks{display:flex;align-items:center;justify-content:center;gap:28px;flex-wrap:wrap;margin-top:24px}
+    .beta-perk{display:flex;align-items:center;gap:9px;font-size:13px;color:#94a3b8}
+    .pck{width:20px;height:20px;border-radius:50%;background:rgba(20,184,166,0.1);border:1px solid rgba(20,184,166,0.28);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:10px;color:#14b8a6;font-weight:700}
+
+    footer{border-top:1px solid rgba(255,255,255,0.05);padding:24px 52px;background:#080E1A;display:flex;align-items:center;justify-content:space-between}
+    .fl{display:flex;align-items:center;gap:12px}
+    .fl img{height:24px;opacity:0.45}
+    .fl-plat{font-size:12px;color:#1e293b}
+
+    @media(max-width:960px){
+      nav,footer{padding:0 20px}
+      .w{padding:0 20px}
+      .nav-center{display:none}
+      .hero-inner{grid-template-columns:1fr;gap:40px;padding:48px 0}
+      .hero-h1{font-size:32px}
+      .flip-grid{grid-template-columns:1fr 1fr;gap:12px}
+      .beta-row{grid-template-columns:1fr}
+      footer{padding:16px 20px;flex-direction:column;gap:8px;text-align:center}
+    }
+    @media(max-width:600px){
+      .flip-grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <img class="nav-logo" src="/logo.png" alt="SignalOps"/>
+  <div class="nav-center">Revenue Intelligence Platform</div>
+  <a href="#beta" class="nav-cta">Join beta</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero-wrap"><div class="w">
+  <div class="hero-inner">
+
+    <!-- Left: text -->
+    <div class="hero-text">
+      <h1 class="hero-h1">Your best customers, your biggest risks, your next deal. <span>It's all in your data. SignalOps unlocks it.</span></h1>
+      <p class="hero-sub">The intelligence layer your revenue team has been missing. <a href="#beta">Join the beta now →</a></p>
+      <div class="hero-scarcity">Beta launching June 2026 &nbsp;·&nbsp; <span>50 spots only</span></div>
+    </div>
+
+    <!-- Right: animated monitor -->
+    <div class="hero-monitor">
+      <div class="mon-outer">
+        <div class="webcam"><div class="webcam-body"><div class="webcam-signal"></div></div></div>
+        <div class="monitor-frame">
+          <div class="monitor-screen" id="mon-screen">
+            <div class="nav-mock">
+              <img class="nav-logo-mon" src="/logo.png" alt="SignalOps"/>
+              <div class="nav-sep-mon"></div>
+              <div class="nav-mock-tabs" id="nav-tabs"></div>
+            </div>
+            <div class="agent-slides" id="slides">
+              <div class="agent-slide active">
+                <div class="slide-header"><div class="slide-icon"><svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-5"/></svg></div><div class="slide-name">Recover</div></div>
+                <div class="slide-hook">Are you sitting on a gold mine?</div>
+                <div class="slide-desc">Surfaces dormant and at-risk accounts showing live buying signals right now. Warm accounts with real context, not cold leads.</div>
+              </div>
+              <div class="agent-slide">
+                <div class="slide-header"><div class="slide-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><div class="slide-name">ICP Profile</div></div>
+                <div class="slide-hook">Do you actually know who your best customers are?</div>
+                <div class="slide-desc">Analyses real revenue data to identify who expands, who stays and who has the highest lifetime value.</div>
+              </div>
+              <div class="agent-slide">
+                <div class="slide-header"><div class="slide-icon"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><div class="slide-name">Ignite</div></div>
+                <div class="slide-hook">Why is that deal going quiet?</div>
+                <div class="slide-desc">No economic buyer after three meetings? Ignite reads the signals and tells your rep exactly what to do next.</div>
+              </div>
+              <div class="agent-slide">
+                <div class="slide-header"><div class="slide-icon"><svg viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div><div class="slide-name">Profit Matrix</div></div>
+                <div class="slide-hook">Which customers are quietly costing you money?</div>
+                <div class="slide-desc">Classifies every account by actual profitability. High cost accounts flagged before they put your best customers at risk.</div>
+              </div>
+              <div class="agent-slide">
+                <div class="slide-header"><div class="slide-icon"><svg viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg></div><div class="slide-name">Generate</div></div>
+                <div class="slide-hook">Are you meeting the right prospects too late?</div>
+                <div class="slide-desc">Live signals — funding rounds, senior hires, product launches — matched to your ideal customer profile.</div>
+              </div>
+              <div class="agent-slide">
+                <div class="slide-header"><div class="slide-icon"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div><div class="slide-name">Data Centre</div></div>
+                <div class="slide-hook">Are you making decisions on data you can trust?</div>
+                <div class="slide-desc">Connects your CRM, billing and CS data into one clean verified layer. Every other agent runs on top of this.</div>
+              </div>
+            </div>
+            <div class="slide-dots" id="mon-dots"></div>
+            <div class="slide-progress" id="mon-progress" style="width:0%"></div>
+          </div>
+        </div>
+        <div class="mon-neck"></div>
+        <div class="mon-base-bar"></div>
+      </div>
+    </div>
+
+  </div>
+</div></div>
+
+<!-- FLIP GRID -->
+<div class="grid-wrap"><div class="w">
+  <div class="grid-section">
+    <div class="sec-lbl">The problem is real</div>
+    <div class="sec-ttl">What the data says. <span>What we do about it.</span></div>
+    <div class="sec-sub">Hover each card to see SignalOps in action.</div>
+    <div class="flip-grid">
+
+      <div class="flip-card"><div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="source-block"><img class="source-logo" src="/logo-bain.png" alt="Bain and Company" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/><div class="source-name src-bain" style="display:none">Bain &amp;<br>Company</div></div>
+          <div class="front-stat">"A 5% increase in retention increases profits by 25% to 95%."</div>
+          <div class="front-hint"><div class="hint-dot"></div>See how SignalOps fixes this</div>
+        </div>
+        <div class="flip-back">
+          <div class="back-header"><svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-5"/></svg><span class="back-name">Recover</span></div>
+          <div class="back-use">A high-value account goes quiet — SignalOps flags it 3 weeks before they churn and generates personalised outreach to win them back.</div>
+          <div class="back-tag">Early warning · Churn prevention</div>
+        </div>
+      </div></div>
+
+      <div class="flip-card"><div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="source-block"><img class="source-logo" src="/logo-mckinsey.png" alt="McKinsey" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/><div class="source-name src-mckinsey" style="display:none">McKinsey<br>&amp; Company</div></div>
+          <div class="front-stat">"Revenue intelligence delivers 15% higher sales efficiency and 20% shorter sales cycles."</div>
+          <div class="front-hint"><div class="hint-dot"></div>See how SignalOps fixes this</div>
+        </div>
+        <div class="flip-back">
+          <div class="back-header"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg><span class="back-name">Ignite</span></div>
+          <div class="back-use">A deal stalls after two meetings with no economic buyer engaged — Ignite spots it and tells your rep exactly what to do before it dies.</div>
+          <div class="back-tag">Deal intelligence · Next best action</div>
+        </div>
+      </div></div>
+
+      <div class="flip-card"><div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="source-block"><img class="source-logo" src="/logo-hbr.png" alt="Harvard Business Review" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/><div class="source-name src-hbr" style="display:none">Harvard<br>Business<br>Review</div></div>
+          <div class="front-stat">"Acquiring a new customer is 5 to 25 times more expensive than retaining one."</div>
+          <div class="front-hint"><div class="hint-dot"></div>See how SignalOps fixes this</div>
+        </div>
+        <div class="flip-back">
+          <div class="back-header"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg><span class="back-name">ICP Profile</span></div>
+          <div class="back-use">Your best 24 customers share 4 traits your team never knew — ICP Profile finds them and tells you exactly who to go find more of.</div>
+          <div class="back-tag">Ideal customer · LTV targeting</div>
+        </div>
+      </div></div>
+
+      <div class="flip-card"><div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="source-block"><img class="source-logo" src="/logo-gartner.png" alt="Gartner" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/><div class="source-name src-gartner" style="display:none">Gartner</div></div>
+          <div class="front-stat">"Sales teams frequently allocate resources to low-potential leads due to lack of customer insight."</div>
+          <div class="front-hint"><div class="hint-dot"></div>See how SignalOps fixes this</div>
+        </div>
+        <div class="flip-back">
+          <div class="back-header"><svg viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg><span class="back-name">Generate</span></div>
+          <div class="back-use">A competitor's customer just raised a Series A — Generate surfaces them the moment the signal fires, before they start searching.</div>
+          <div class="back-tag">Live signals · In-market prospects</div>
+        </div>
+      </div></div>
+
+      <div class="flip-card"><div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="source-block"><img class="source-logo" src="/logo-forrester.png" alt="Forrester" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/><div class="source-name src-forrester" style="display:none">Forrester</div></div>
+          <div class="front-stat">"Companies using proactive customer care reduce churn by 10% to 15%."</div>
+          <div class="front-hint"><div class="hint-dot"></div>See how SignalOps fixes this</div>
+        </div>
+        <div class="flip-back">
+          <div class="back-header"><svg viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg><span class="back-name">Profit Matrix</span></div>
+          <div class="back-use">One account generates €80k but costs more to serve than they pay — Profit Matrix flags it before they drain your margin and put better clients at risk.</div>
+          <div class="back-tag">Profitability · Cost to serve</div>
+        </div>
+      </div></div>
+
+      <div class="flip-card"><div class="flip-card-inner">
+        <div class="flip-front">
+          <div class="source-block"><img class="source-logo" src="/logo-gartner.png" alt="Gartner" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/><div class="source-name src-gartner" style="display:none">Gartner</div></div>
+          <div class="front-stat">"Only 45% of sales leaders are confident in the accuracy of their sales forecasts."</div>
+          <div class="front-hint"><div class="hint-dot"></div>See how SignalOps fixes this</div>
+        </div>
+        <div class="flip-back">
+          <div class="back-header"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg><span class="back-name">Data Centre</span></div>
+          <div class="back-use">Your CRM, billing and CS data tell three different stories — Data Centre reconciles them into one source of truth every agent can trust.</div>
+          <div class="back-tag">Data integrity · Single source of truth</div>
+        </div>
+      </div></div>
+
+    </div>
+  </div>
+</div></div>
+
+<!-- BETA -->
+<div id="beta"><div class="w">
+  <div class="beta">
+    <div class="beta-ttl">Join the beta. <span>Find your gold mine.</span></div>
+    <div class="beta-sub">We're onboarding B2B SaaS companies with 20–200 customers who are ready to see what their data has been hiding.</div>
+    <div class="beta-scarce"><div class="sdot"></div>Limited to 50 companies · June 2026</div>
+    <div class="beta-form" id="fw">
+      <div class="beta-row">
+        <input class="ff" type="text" id="fn" placeholder="Full name"/>
+        <input class="ff" type="text" id="fc" placeholder="Company name"/>
+      </div>
+      <div class="beta-row">
+        <input class="ff" type="email" id="fe" placeholder="Work email"/>
+        <input class="ff" type="text" id="fcu" placeholder="No. of customers"/>
+      </div>
+      <button class="fs" onclick="go()">Request beta access →</button>
+      <div class="fn">50 spots only · We'll be in touch within 48 hours</div>
+    </div>
+    <div class="fok" id="fok">
+      <div class="fok-i">✓</div>
+      <div class="fok-t">You're on the list.</div>
+      <div class="fok-s">We'll be in touch within 48 hours.</div>
+    </div>
+    <div class="beta-perks">
+      <div class="beta-perk"><div class="pck">✓</div><span>Full platform free for 90 days</span></div>
+      <div class="beta-perk"><div class="pck">✓</div><span>Founding member pricing locked forever</span></div>
+      <div class="beta-perk"><div class="pck">✓</div><span>Direct line to the product team</span></div>
+      <div class="beta-perk"><div class="pck">✓</div><span>Shape the roadmap from day one</span></div>
+    </div>
+  </div>
+</div></div>
+
+<footer>
+  <div class="fl"><img src="/logo.png" alt="SignalOps"/><span class="fl-plat">Revenue Intelligence Platform</span></div>
+  <div style="font-size:11px;color:#1e293b">© 2026 Koreva</div>
+</footer>
+
+<script>
+(function(){
+  var tabs=['Recover','ICP Profile','Ignite','Profit Matrix','Generate','Data Centre'];
+  var slides=document.querySelectorAll('.agent-slide');
+  var cur=0,DUR=4500,startT=null,raf=null;
+  var dotsEl=document.getElementById('mon-dots');
+  var navTabs=document.getElementById('nav-tabs');
+  var prog=document.getElementById('mon-progress');
+  tabs.forEach(function(t,i){
+    var d=document.createElement('div');
+    d.className='slide-dot'+(i===0?' on':'');
+    dotsEl.appendChild(d);
+    var el=document.createElement('div');
+    el.className='nav-tab-mon'+(i===0?' on':'');
+    el.textContent=t;
+    el.id='ntab'+i;
+    navTabs.appendChild(el);
+  });
+  function goTo(n){
+    slides[cur].classList.remove('active');
+    dotsEl.children[cur].classList.remove('on');
+    document.getElementById('ntab'+cur).classList.remove('on');
+    cur=(n+slides.length)%slides.length;
+    slides[cur].classList.add('active');
+    dotsEl.children[cur].classList.add('on');
+    document.getElementById('ntab'+cur).classList.add('on');
+    prog.style.transition='none';
+    prog.style.width='0%';
+    startT=null;
+  }
+  function tick(ts){
+    if(!startT) startT=ts;
+    var pct=Math.min(100,((ts-startT)/DUR)*100);
+    prog.style.width=pct+'%';
+    if(pct>=100){goTo(cur+1);startT=ts;}
+    raf=requestAnimationFrame(tick);
+  }
+  raf=requestAnimationFrame(tick);
+  var screen=document.getElementById('mon-screen');
+  screen.addEventListener('mouseenter',function(){cancelAnimationFrame(raf);raf=null;});
+  screen.addEventListener('mouseleave',function(){startT=null;raf=requestAnimationFrame(tick);});
+})();
+
+function go(){
+  var n=document.getElementById('fn').value.trim();
+  var e=document.getElementById('fe').value.trim();
+  var c=document.getElementById('fc').value.trim();
+  var cu=document.getElementById('fcu').value.trim();
+  if(!n||!e){alert('Please enter your name and email.');return;}
+  var b=document.querySelector('.fs');
+  b.disabled=true;b.textContent='Submitting...';b.style.opacity='0.6';
+  fetch('https://api.resend.com/emails',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Authorization':'Bearer re_ULK93ABP_95YMv6i1RW8rNqie1bFEsnNH'},
+    body:JSON.stringify({from:'team@signal-ops.app',to:'power.stephen@gmail.com',subject:'New beta signup: '+n,html:'<h2>New SignalOps beta signup</h2><p><strong>Name:</strong> '+n+'</p><p><strong>Email:</strong> '+e+'</p><p><strong>Company:</strong> '+(c||'Not provided')+'</p><p><strong>Customers:</strong> '+(cu||'Not provided')+'</p>'})
+  }).then(function(){
+    document.getElementById('fw').style.display='none';
+    document.getElementById('fok').style.display='block';
+  }).catch(function(){
+    document.getElementById('fw').style.display='none';
+    document.getElementById('fok').style.display='block';
+  });
+}
+</script>
+</body>
+</html>
